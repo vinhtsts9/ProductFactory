@@ -29,6 +29,8 @@ function renderView(view: AppView) {
 
 export function App() {
   const [view, setView] = useState<AppView>("dashboard");
+  const [builderEntity, setBuilderEntity] = useState<"pattern" | "template">("pattern");
+  const [selectedConfigId, setSelectedConfigId] = useState<string>("CFG-0042");
 
   return (
     <Shell activeView={view} onNavigate={setView}>
