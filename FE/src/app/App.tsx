@@ -1,9 +1,12 @@
 import { useState } from "react";
+import { AttributeListPage } from "../features/attributes/screens/AttributeListPage";
+import { BlockListPage } from "../features/blocks/screens/BlockListPage";
 import { DashboardPage } from "../features/dashboard/screens/DashboardPage";
+import { ObligationLibraryPage } from "../features/obligations/screens/ObligationLibraryPage";
 import { OntologyPage } from "../features/ontology/screens/OntologyPage";
 import { BusinessIntentPage } from "../features/product/screens/BusinessIntentPage";
-import { ProductIntentPage } from "../features/product/screens/ProductIntentPage";
 import { PatternPage } from "../features/product/screens/PatternPage";
+import { ProductIntentPage } from "../features/product/screens/ProductIntentPage";
 import { TemplatePage } from "../features/product/screens/TemplatePage";
 import type { AppView } from "./navigation";
 import { Shell } from "./Shell";
@@ -14,6 +17,12 @@ function renderView(view: AppView) {
       return <DashboardPage />;
     case "ontology":
       return <OntologyPage />;
+    case "obligation":
+      return <ObligationLibraryPage />;
+    case "attribute":
+      return <AttributeListPage />;
+    case "block":
+      return <BlockListPage />;
     case "businessintent":
       return <BusinessIntentPage />;
     case "intent":
@@ -29,8 +38,6 @@ function renderView(view: AppView) {
 
 export function App() {
   const [view, setView] = useState<AppView>("dashboard");
-  const [builderEntity, setBuilderEntity] = useState<"pattern" | "template">("pattern");
-  const [selectedConfigId, setSelectedConfigId] = useState<string>("CFG-0042");
 
   return (
     <Shell activeView={view} onNavigate={setView}>
@@ -55,4 +62,3 @@ function PendingView({ view }: { view: AppView }) {
     </div>
   );
 }
-
