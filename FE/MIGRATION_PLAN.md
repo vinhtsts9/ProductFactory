@@ -79,4 +79,8 @@ Với mỗi view:
 
 ## Lát tiếp theo
 
-Lát tiếp theo nên là `DashboardPage`: port grid KPI, pipeline cards, work queue và activity từ `migration/original/template.html`, sau đó tách dữ liệu sang `features/dashboard/mockData.ts`.
+Lát tiếp theo nên là `Attribute / Block`: port list page, mock data, API placeholder và nối route.
+
+## Chia việc nhiều máy
+
+Kế hoạch chia cụ thể cho 3 máy nằm ở `../WORK_SPLIT_3_MACHINES.md`.

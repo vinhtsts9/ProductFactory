@@ -15,21 +15,32 @@ Mỗi người hoặc mỗi máy nên nhận một feature folder riêng để t
 - `src/features/simulation`: Simulation Engine.
 - `src/features/release`: Review / Release / Catalog.
 
+Kế hoạch chia cho 3 máy nằm ở `WORK_SPLIT_3_MACHINES.md`.
+
 ## Quy tắc branch
+
+Mỗi máy tự tạo branch của máy mình từ `main`. Không code trực tiếp trên `main`, và không dùng chung branch giữa nhiều máy.
 
 Tạo branch theo mẫu:
 
 ```txt
-fe/<feature-name>
+fe/<machine-number>-<feature-name>
 ```
 
 Ví dụ:
 
 ```txt
-fe/attribute-list
-fe/block-library
-fe/product-flow
-fe/builder-canvas
+fe/m1-foundation-library
+fe/m2-product-flow
+fe/m3-builder-simulation
+```
+
+Lệnh tạo branch:
+
+```txt
+git checkout main
+git pull
+git checkout -b fe/<machine-number>-<feature-name>
 ```
 
 ## Quy tắc code
@@ -39,6 +50,7 @@ fe/builder-canvas
 - API thật hoặc mock phải đi qua `features/<domain>/api.ts`.
 - Dữ liệu hardcode tạm thời đặt trong `mockData.ts`.
 - Mỗi view port xong phải giữ gần 1:1 với HTML gốc trước khi refactor style.
+- Nếu cần sửa file chung như `src/app/navigation.ts`, báo trước trong PR để tránh conflict.
 
 ## Trước khi merge
 
