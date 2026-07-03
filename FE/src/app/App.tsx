@@ -8,40 +8,68 @@ import { BusinessIntentPage } from "../features/product/screens/BusinessIntentPa
 import { PatternPage } from "../features/product/screens/PatternPage";
 import { ProductIntentPage } from "../features/product/screens/ProductIntentPage";
 import { TemplatePage } from "../features/product/screens/TemplatePage";
+import { BuilderPage } from "../features/builder/screens/BuilderPage";
+import { ConfigListPage } from "../features/config/screens/ConfigListPage";
+import { ConfigFormPage } from "../features/config/screens/ConfigFormPage";
+import { SimulationPage } from "../features/simulation/screens/SimulationPage";
+import { ReleasePage } from "../features/release/screens/ReleasePage";
+import { CatalogPage } from "../features/release/screens/CatalogPage";
 import type { AppView } from "./navigation";
 import { Shell } from "./Shell";
 
-function renderView(view: AppView) {
-  switch (view) {
-    case "dashboard":
-      return <DashboardPage />;
-    case "ontology":
-      return <OntologyPage />;
-    case "obligation":
-      return <ObligationLibraryPage />;
-    case "attribute":
-      return <AttributeListPage />;
-    case "block":
-      return <BlockListPage />;
-    case "businessintent":
-      return <BusinessIntentPage />;
-    case "intent":
-      return <ProductIntentPage />;
-    case "pattern":
-      return <PatternPage />;
-    case "template":
-      return <TemplatePage />;
-    default:
-      return <PendingView view={view} />;
-  }
-}
-
 export function App() {
   const [view, setView] = useState<AppView>("dashboard");
+  const [builderEntity, setBuilderEntity] = useState<"pattern" | "template">("pattern");
+  const [selectedConfigId, setSelectedConfigId] = useState<string>("CFG-0042");
+
+  const renderView = () => {
+    switch (view) {
+      case "dashboard":
+        return <DashboardPage />;
+      case "ontology":
+        return <OntologyPage />;
+      case "obligation":
+        return <ObligationLibraryPage />;
+      case "attribute":
+        return <AttributeListPage />;
+      case "block":
+        return <BlockListPage />;
+      case "businessintent":
+        return <BusinessIntentPage />;
+      case "intent":
+        return <ProductIntentPage />;
+      case "pattern":
+        return <PatternPage />;
+      case "template":
+        return <TemplatePage />;
+      case "builder":
+        return <BuilderPage entity={builderEntity} onNavigate={setView} />;
+      case "config":
+        return (
+          <ConfigListPage
+            onNavigate={setView}
+            onSelectConfig={(id) => {
+              setSelectedConfigId(id);
+              setView("configForm");
+            }}
+          />
+        );
+      case "configForm":
+        return <ConfigFormPage configId={selectedConfigId} onNavigate={setView} />;
+      case "simulation":
+        return <SimulationPage onNavigate={setView} />;
+      case "release":
+        return <ReleasePage onNavigate={setView} />;
+      case "catalog":
+        return <CatalogPage />;
+      default:
+        return <PendingView view={view} />;
+    }
+  };
 
   return (
     <Shell activeView={view} onNavigate={setView}>
-      {renderView(view)}
+      {renderView()}
     </Shell>
   );
 }
