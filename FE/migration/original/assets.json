@@ -1,0 +1,146 @@
+[
+  {
+    "uuid": "b92cdd9a-1007-40cb-bce9-3f317917fb7c",
+    "mime": "text/javascript",
+    "compressed": true,
+    "file": "assets/b92cdd9a-1007-40cb-bce9-3f317917fb7c.js"
+  },
+  {
+    "uuid": "f619cc9a-adc6-456b-ab7b-b9352b79254a",
+    "mime": "text/javascript",
+    "compressed": true,
+    "file": "assets/f619cc9a-adc6-456b-ab7b-b9352b79254a.js"
+  },
+  {
+    "uuid": "e3bc2ada-3977-4fbc-ab9d-7a0ebc70006f",
+    "mime": "text/javascript",
+    "compressed": true,
+    "file": "assets/e3bc2ada-3977-4fbc-ab9d-7a0ebc70006f.js"
+  },
+  {
+    "uuid": "4e7d4df4-7f1c-4580-a79b-8aa7f7eddc1a",
+    "mime": "font/woff2",
+    "compressed": false,
+    "file": "assets/4e7d4df4-7f1c-4580-a79b-8aa7f7eddc1a.woff2"
+  },
+  {
+    "uuid": "be86c074-4fde-46e2-b084-aef92b9e2aa9",
+    "mime": "font/woff2",
+    "compressed": false,
+    "file": "assets/be86c074-4fde-46e2-b084-aef92b9e2aa9.woff2"
+  },
+  {
+    "uuid": "491fdd4a-fa3b-4707-9d7f-33181d627624",
+    "mime": "font/woff2",
+    "compressed": false,
+    "file": "assets/491fdd4a-fa3b-4707-9d7f-33181d627624.woff2"
+  },
+  {
+    "uuid": "6368af19-b684-46ea-8f33-ce60f0a465bd",
+    "mime": "font/woff2",
+    "compressed": false,
+    "file": "assets/6368af19-b684-46ea-8f33-ce60f0a465bd.woff2"
+  },
+  {
+    "uuid": "3d4a83f6-9f07-4b6d-9fde-dab07b0e3735",
+    "mime": "font/woff2",
+    "compressed": false,
+    "file": "assets/3d4a83f6-9f07-4b6d-9fde-dab07b0e3735.woff2"
+  },
+  {
+    "uuid": "f8baa3ed-d0d0-4637-b513-a74abfa2a5ab",
+    "mime": "font/woff2",
+    "compressed": false,
+    "file": "assets/f8baa3ed-d0d0-4637-b513-a74abfa2a5ab.woff2"
+  },
+  {
+    "uuid": "ebfde073-68a8-4c3c-a8d8-e73ece4f0f00",
+    "mime": "font/woff2",
+    "compressed": false,
+    "file": "assets/ebfde073-68a8-4c3c-a8d8-e73ece4f0f00.woff2"
+  },
+  {
+    "uuid": "aa7021ab-7133-47a0-8e42-746a76e75a61",
+    "mime": "font/woff2",
+    "compressed": false,
+    "file": "assets/aa7021ab-7133-47a0-8e42-746a76e75a61.woff2"
+  },
+  {
+    "uuid": "584badc7-b40a-4519-bb27-7e629716616a",
+    "mime": "font/woff2",
+    "compressed": false,
+    "file": "assets/584badc7-b40a-4519-bb27-7e629716616a.woff2"
+  },
+  {
+    "uuid": "f80c4880-3fbd-4e14-88b3-7a482f758f13",
+    "mime": "font/woff2",
+    "compressed": false,
+    "file": "assets/f80c4880-3fbd-4e14-88b3-7a482f758f13.woff2"
+  },
+  {
+    "uuid": "0dff202c-2af9-44be-bae5-b1cf5213ebf0",
+    "mime": "font/woff2",
+    "compressed": false,
+    "file": "assets/0dff202c-2af9-44be-bae5-b1cf5213ebf0.woff2"
+  },
+  {
+    "uuid": "014bac3f-4a98-4f22-bf0d-22216705dcb6",
+    "mime": "font/woff2",
+    "compressed": false,
+    "file": "assets/014bac3f-4a98-4f22-bf0d-22216705dcb6.woff2"
+  },
+  {
+    "uuid": "de5e7e46-6058-4e8c-82d3-a8f3866d4763",
+    "mime": "font/woff2",
+    "compressed": false,
+    "file": "assets/de5e7e46-6058-4e8c-82d3-a8f3866d4763.woff2"
+  },
+  {
+    "uuid": "0737456c-9c05-4e72-b551-cac4c27259cb",
+    "mime": "font/woff2",
+    "compressed": false,
+    "file": "assets/0737456c-9c05-4e72-b551-cac4c27259cb.woff2"
+  },
+  {
+    "uuid": "761f2d37-15dd-4ce3-996f-24a515e41557",
+    "mime": "font/woff2",
+    "compressed": false,
+    "file": "assets/761f2d37-15dd-4ce3-996f-24a515e41557.woff2"
+  },
+  {
+    "uuid": "9aaa65e7-2b91-4ae8-86c4-ecd86c103d2c",
+    "mime": "font/woff2",
+    "compressed": false,
+    "file": "assets/9aaa65e7-2b91-4ae8-86c4-ecd86c103d2c.woff2"
+  },
+  {
+    "uuid": "fe848f54-97da-4b83-9551-5355685c7809",
+    "mime": "font/woff2",
+    "compressed": false,
+    "file": "assets/fe848f54-97da-4b83-9551-5355685c7809.woff2"
+  },
+  {
+    "uuid": "dc5cffbc-1bfe-4bb9-b689-7ea20c743119",
+    "mime": "font/woff2",
+    "compressed": false,
+    "file": "assets/dc5cffbc-1bfe-4bb9-b689-7ea20c743119.woff2"
+  },
+  {
+    "uuid": "f83a1c9f-5b8c-407c-9fe9-867cbc0bfa36",
+    "mime": "font/woff2",
+    "compressed": false,
+    "file": "assets/f83a1c9f-5b8c-407c-9fe9-867cbc0bfa36.woff2"
+  },
+  {
+    "uuid": "3fd10c10-048d-4aba-bb2f-2f761ea7f4a7",
+    "mime": "font/woff2",
+    "compressed": false,
+    "file": "assets/3fd10c10-048d-4aba-bb2f-2f761ea7f4a7.woff2"
+  },
+  {
+    "uuid": "0604a249-00cd-4efc-80cd-f97f8132bea2",
+    "mime": "font/woff2",
+    "compressed": false,
+    "file": "assets/0604a249-00cd-4efc-80cd-f97f8132bea2.woff2"
+  }
+]
