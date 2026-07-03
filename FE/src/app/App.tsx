@@ -1,14 +1,31 @@
 import { useState } from "react";
 import { DashboardPage } from "../features/dashboard/screens/DashboardPage";
 import { OntologyPage } from "../features/ontology/screens/OntologyPage";
-import { BuilderPage } from "../features/builder/screens/BuilderPage";
-import { ConfigListPage } from "../features/config/screens/ConfigListPage";
-import { ConfigFormPage } from "../features/config/screens/ConfigFormPage";
-import { SimulationPage } from "../features/simulation/screens/SimulationPage";
-import { ReleasePage } from "../features/release/screens/ReleasePage";
-import { CatalogPage } from "../features/release/screens/CatalogPage";
+import { BusinessIntentPage } from "../features/product/screens/BusinessIntentPage";
+import { ProductIntentPage } from "../features/product/screens/ProductIntentPage";
+import { PatternPage } from "../features/product/screens/PatternPage";
+import { TemplatePage } from "../features/product/screens/TemplatePage";
 import type { AppView } from "./navigation";
 import { Shell } from "./Shell";
+
+function renderView(view: AppView) {
+  switch (view) {
+    case "dashboard":
+      return <DashboardPage />;
+    case "ontology":
+      return <OntologyPage />;
+    case "businessintent":
+      return <BusinessIntentPage />;
+    case "intent":
+      return <ProductIntentPage />;
+    case "pattern":
+      return <PatternPage />;
+    case "template":
+      return <TemplatePage />;
+    default:
+      return <PendingView view={view} />;
+  }
+}
 
 export function App() {
   const [view, setView] = useState<AppView>("dashboard");
@@ -17,35 +34,7 @@ export function App() {
 
   return (
     <Shell activeView={view} onNavigate={setView}>
-      {view === "dashboard" ? (
-        <DashboardPage />
-      ) : view === "ontology" ? (
-        <OntologyPage />
-      ) : view === "builder" ? (
-        <BuilderPage entity={builderEntity} onNavigate={setView} />
-      ) : view === "pattern" ? (
-        <BuilderPage entity="pattern" onNavigate={setView} />
-      ) : view === "template" ? (
-        <BuilderPage entity="template" onNavigate={setView} />
-      ) : view === "config" ? (
-        <ConfigListPage
-          onNavigate={setView}
-          onSelectConfig={(id) => {
-            setSelectedConfigId(id);
-            setView("configForm");
-          }}
-        />
-      ) : view === "configForm" ? (
-        <ConfigFormPage configId={selectedConfigId} onNavigate={setView} />
-      ) : view === "simulation" ? (
-        <SimulationPage onNavigate={setView} />
-      ) : view === "release" ? (
-        <ReleasePage onNavigate={setView} />
-      ) : view === "catalog" ? (
-        <CatalogPage />
-      ) : (
-        <PendingView view={view} />
-      )}
+      {renderView(view)}
     </Shell>
   );
 }
@@ -66,3 +55,4 @@ function PendingView({ view }: { view: AppView }) {
     </div>
   );
 }
+
