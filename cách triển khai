@@ -1,0 +1,278 @@
+# Cách triển khai chuyển đổi FE Product Factory 5.1
+
+## Kế hoạch ban đầu có bị thay đổi không?
+
+Có thay đổi về thứ tự, không thay đổi mục tiêu.
+
+Kế hoạch ban đầu của bạn là đúng: giải nén asset, dịch DSL sang JSX, tách `renderVals()`, tách state, thay hardcode bằng API/mock, giữ pixel-perfect. Điểm mình đã điều chỉnh là đưa bước dựng khung FE và API boundary lên trước bước dịch từng view.
+
+Lý do: nếu dịch UI trước rồi mới tách API/state sau, rất dễ phải sửa lại component nhiều lần. Dựng sẵn `FE/src/app`, `FE/src/features`, `FE/src/shared/api`, `FE/src/mocks` giúp mỗi view sau khi port xong đã nằm đúng chỗ và có chỗ nối backend ngay.
+
+## Quy trình chính thức sau khi điều chỉnh
+
+### Pha 0 - Giải nén và giữ source gốc
+
+- Dùng `FE/tools/extract-bundle.mjs` để giải nén HTML gốc.
+- Đầu ra chuẩn:
+  - `FE/migration/original/template.html`
+  - `FE/migration/original/manifest.json`
+  - `FE/migration/original/assets.json`
+  - `FE/migration/original/assets/*`
+- Không sửa trực tiếp các file trong `migration/original`. Đây là nguồn đối chiếu pixel-perfect.
+
+### Pha 1 - Dựng khung FE trước
+
+- `src/app`: app shell, layout, route/view registry.
+- `src/features/<domain>`: mỗi domain có `api.ts`, `hooks.ts`, `mockData.ts`, `screens/`.
+- `src/shared/api`: HTTP client, response type chung.
+- `src/mocks`: MSW handlers.
+- `src/styles`: global CSS, font-face, style nền.
+
+Quy tắc: component không gọi `fetch` trực tiếp. Component gọi hook, hook gọi `features/<domain>/api.ts`.
+
+### Pha 2 - Dịch DSL sang JSX theo từng view
+
+Không convert toàn bộ HTML một lần. Làm từng view để dễ review.
+
+Thứ tự đề xuất:
+
+1. Dashboard
+2. Ontology / Element Type / Obligation Type
+3. Attribute / Block
+4. Business Intent / Product Intent
+5. Pattern / Template list
+6. Pattern / Template builder
+7. Config
+8. Simulation
+9. Review / Release / Catalog
+
+Với mỗi view:
+
+- Copy đúng block từ `migration/original/template.html`.
+- Dịch:
+  - `{{ expr }}` -> `{expr}`
+  - `<sc-if value="{{ condition }}">` -> `{condition && (...)}`
+  - `<sc-for list="{{ items }}" as="item">` -> `{items.map((item) => (...))}`
+  - `onclick="{{ fn }}"` -> `onClick={fn}`
+  - `style="{{ obj }}"` -> `style={obj}`
+- Giữ inline style trước để không lệch giao diện.
+- Chỉ chuyển CSS Modules sau khi view đã chạy đúng.
+
+### Pha 3 - Tách `renderVals()` thành hook theo view
+
+Mục tiêu là bỏ object render khổng lồ.
+
+Ví dụ:
+
+- `useDashboardData()`
+- `useOntologyData()`
+- `useAttributeData()`
+- `useBuilderState()`
+- `useConfigForm()`
+- `useSimulationData()`
+
+Mỗi hook chỉ trả dữ liệu và handler mà view đó cần.
+
+### Pha 4 - Tách state theo feature
+
+- State điều hướng/view: để trong `src/app`.
+- State form đơn giản: dùng `useReducer` trong feature.
+- State builder/canvas/phức tạp: dùng Zustand slice hoặc reducer riêng.
+- State server/cache: dùng React Query.
+- Giữ tên field gốc khi port logic để tránh lệch hành vi.
+
+### Pha 5 - Thay hardcode bằng API boundary
+
+Mọi mảng hardcode như KPI, pipeline, ontology type, block, attribute, config, simulation scenario sẽ chuyển về:
+
+```txt
+features/<domain>/mockData.ts
+features/<domain>/api.ts
+features/<domain>/hooks.ts
+```
+
+Trong giai đoạn chưa có backend:
+
+- `api.ts` giữ function và comment `TODO(API Px)`.
+- `mockData.ts` giữ data y hệt hardcode cũ.
+- MSW có thể trả response giống backend thật.
+
+Khi có backend:
+
+- Chỉ sửa `features/<domain>/api.ts` hoặc `shared/api/httpClient.ts`.
+- Không sửa lại component nếu response shape giữ đúng.
+
+## Kế hoạch chuyển đổi song song trên nhiều máy
+
+Mục tiêu là chia việc để nhiều máy/người có thể làm cùng lúc mà ít đụng file nhau.
+
+### Nguyên tắc chia việc
+
+- Mỗi máy nhận một feature folder riêng.
+- Không sửa chung một view nếu chưa thống nhất owner.
+- Không sửa `migration/original` trên bất kỳ máy nào.
+- Không đổi API response shape tùy ý; nếu cần đổi phải cập nhật `api_spec.md` trước.
+- Mọi feature phải có `api.ts`, `hooks.ts`, `mockData.ts`, `screens/`.
+
+### Nhóm việc song song
+
+#### Máy 1 - App shell và layout chung
+
+Phạm vi:
+
+- `src/app/*`
+- `src/styles/*`
+- `src/shared/ui/*`
+
+Đầu ra:
+
+- Sidebar/topbar/layout chuẩn.
+- View registry.
+- Style/font nền dùng lại.
+
+Không phụ thuộc nhiều vào API.
+
+#### Máy 2 - Ontology foundation
+
+Phạm vi:
+
+- `src/features/ontology/*`
+- Element Type
+- Obligation Type
+- Matrix nếu liên quan ontology
+
+API liên quan:
+
+- `GET /api/element-types`
+- `GET /api/element-types/:code`
+- `GET /api/obligation-types`
+- `GET /api/blocks`
+- `GET /api/attributes`
+
+Đây là nhóm P0 nên nên làm sớm.
+
+#### Máy 3 - Attribute và Block
+
+Phạm vi:
+
+- `src/features/attributes/*`
+- `src/features/blocks/*`
+- Modal tạo/sửa attribute nếu có
+
+API liên quan:
+
+- Attribute CRUD
+- Block CRUD
+- Usage/detail view
+
+Nhóm này có thể chạy song song với Ontology nếu giữ type chung ổn định.
+
+#### Máy 4 - Product flow
+
+Phạm vi:
+
+- `src/features/product/*`
+- Business Intent
+- Product Intent
+- Pattern list
+- Template list
+
+API liên quan:
+
+- `GET /api/business-intents`
+- `GET /api/product-intents`
+- `GET /api/patterns`
+- `GET /api/templates`
+
+Nhóm này phụ thuộc nhẹ vào ontology/block data.
+
+#### Máy 5 - Builder
+
+Phạm vi:
+
+- `src/features/builder/*`
+- Palette block/OT
+- Canvas
+- Drag/drop
+- Coverage matrix
+
+API liên quan:
+
+- Pattern detail
+- Template detail
+- Block palette
+- Obligation type palette
+- Save draft
+
+Đây là phần rủi ro cao nhất, nên tách branch riêng và merge sau khi shell + ontology ổn.
+
+#### Máy 6 - Config và Simulation
+
+Phạm vi:
+
+- `src/features/config/*`
+- `src/features/simulation/*`
+
+API liên quan:
+
+- Config CRUD
+- Simulation catalog
+- Run simulation
+- Compare/pin scenarios
+
+Simulation có nhiều logic tính toán nên cần port chậm, kiểm tra từng công thức.
+
+#### Máy 7 - Release / Catalog / Review
+
+Phạm vi:
+
+- `src/features/release/*`
+- `src/features/catalog/*`
+- Review/publish flow
+
+API liên quan:
+
+- Review checklist
+- Publish/release status
+- Catalog list/detail
+
+Nhóm này làm sau khi Product/Config có dữ liệu mock ổn.
+
+## Quy tắc merge để không giẫm chân nhau
+
+1. Mỗi máy tạo branch theo mẫu `fe/<feature-name>`.
+2. Trước khi port view, copy block gốc vào note riêng hoặc comment đầu file để dễ đối chiếu.
+3. Chỉ sửa file trong feature mình sở hữu, trừ khi có thỏa thuận.
+4. Nếu cần thêm type dùng chung, thêm vào `src/shared` và báo các máy khác.
+5. Mỗi PR/merge phải chạy:
+
+```txt
+npm run build
+npm run check:api-placeholders
+```
+
+6. Nếu đổi endpoint hoặc response shape, cập nhật `api_spec.md` cùng lúc.
+
+## Definition of Done cho mỗi view
+
+Một view được coi là port xong khi:
+
+- Render được trong FE.
+- Không còn DSL `sc-if`, `sc-for`, mustache trong file JSX của view đó.
+- Dữ liệu hardcode đã nằm trong `mockData.ts` hoặc API layer.
+- Component không gọi `fetch` trực tiếp.
+- Inline style giữ gần 1:1 với HTML gốc.
+- Build pass.
+
+## Kết luận
+
+Kế hoạch ban đầu không sai. Bản mới chỉ đổi thứ tự để dễ mở rộng và làm song song:
+
+```txt
+Giải nén source gốc
+-> dựng FE shell + API boundary
+-> chia feature theo máy
+-> port từng view 1:1
+-> tách data/state
+-> thay mock bằng backend thật
+```
