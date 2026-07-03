@@ -1,15 +1,38 @@
 import { useState } from "react";
 import { DashboardPage } from "../features/dashboard/screens/DashboardPage";
 import { OntologyPage } from "../features/ontology/screens/OntologyPage";
+import { BusinessIntentPage } from "../features/product/screens/BusinessIntentPage";
+import { ProductIntentPage } from "../features/product/screens/ProductIntentPage";
+import { PatternPage } from "../features/product/screens/PatternPage";
+import { TemplatePage } from "../features/product/screens/TemplatePage";
 import type { AppView } from "./navigation";
 import { Shell } from "./Shell";
+
+function renderView(view: AppView) {
+  switch (view) {
+    case "dashboard":
+      return <DashboardPage />;
+    case "ontology":
+      return <OntologyPage />;
+    case "businessintent":
+      return <BusinessIntentPage />;
+    case "intent":
+      return <ProductIntentPage />;
+    case "pattern":
+      return <PatternPage />;
+    case "template":
+      return <TemplatePage />;
+    default:
+      return <PendingView view={view} />;
+  }
+}
 
 export function App() {
   const [view, setView] = useState<AppView>("dashboard");
 
   return (
     <Shell activeView={view} onNavigate={setView}>
-      {view === "dashboard" ? <DashboardPage /> : view === "ontology" ? <OntologyPage /> : <PendingView view={view} />}
+      {renderView(view)}
     </Shell>
   );
 }
@@ -30,3 +53,4 @@ function PendingView({ view }: { view: AppView }) {
     </div>
   );
 }
+
