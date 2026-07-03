@@ -19,7 +19,9 @@ Giải nén source gốc
 - [x] Tạo fallback screen cho các view chưa port.
 - [x] Port Dashboard overview: KPI, pipeline, activity, family/status.
 - [x] Port Ontology overview: concept chain, type decomposition, vocabulary.
-- [ ] Port Attribute / Block.
+- [x] Port Attribute / Block list pages.
+- [x] Port Attribute detail/usage và Block detail.
+- [x] Port Obligation Library tabs: Obligation Type, Obligation Element, Element Type.
 - [ ] Port Product flow.
 - [x] Port Builder.
 - [x] Port Config / Simulation.
@@ -79,7 +81,7 @@ Với mỗi view:
 
 ## Lát tiếp theo
 
-Lát tiếp theo nên là `Attribute / Block`: port list page, mock data, API placeholder và nối route.
+Phần Máy 1 hiện đã có nền Foundation Library: Ontology overview, Attribute, Block và Obligation Library. Lát tiếp theo toàn dự án có thể chuyển sang Máy 2 `Product Flow` hoặc Máy 3 `Builder shell`, tùy thứ tự merge.
 
 ## Chia việc nhiều máy
 

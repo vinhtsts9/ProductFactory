@@ -1,9 +1,12 @@
 import { useState } from "react";
+import { AttributeListPage } from "../features/attributes/screens/AttributeListPage";
+import { BlockListPage } from "../features/blocks/screens/BlockListPage";
 import { DashboardPage } from "../features/dashboard/screens/DashboardPage";
+import { ObligationLibraryPage } from "../features/obligations/screens/ObligationLibraryPage";
 import { OntologyPage } from "../features/ontology/screens/OntologyPage";
 import { BusinessIntentPage } from "../features/product/screens/BusinessIntentPage";
-import { ProductIntentPage } from "../features/product/screens/ProductIntentPage";
 import { PatternPage } from "../features/product/screens/PatternPage";
+import { ProductIntentPage } from "../features/product/screens/ProductIntentPage";
 import { TemplatePage } from "../features/product/screens/TemplatePage";
 import { BuilderPage } from "../features/builder/screens/BuilderPage";
 import { ConfigListPage } from "../features/config/screens/ConfigListPage";
@@ -25,6 +28,12 @@ export function App() {
         return <DashboardPage />;
       case "ontology":
         return <OntologyPage />;
+      case "obligation":
+        return <ObligationLibraryPage />;
+      case "attribute":
+        return <AttributeListPage />;
+      case "block":
+        return <BlockListPage />;
       case "businessintent":
         return <BusinessIntentPage />;
       case "intent":
@@ -81,4 +90,3 @@ function PendingView({ view }: { view: AppView }) {
     </div>
   );
 }
-
