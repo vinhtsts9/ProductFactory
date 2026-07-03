@@ -11,15 +11,18 @@
     "check:api-placeholders": "node tools/check-api-placeholders.mjs"
   },
   "dependencies": {
+    "@tanstack/react-query": "^5.80.0",
     "@vitejs/plugin-react": "^5.0.0",
-    "vite": "^7.0.0",
-    "typescript": "^5.8.0",
+    "lucide-react": "^0.468.0",
+    "msw": "^2.10.0",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
-    "@tanstack/react-query": "^5.80.0",
-    "msw": "^2.10.0",
-    "zustand": "^5.0.0",
-    "lucide-react": "^0.468.0"
+    "typescript": "^5.8.0",
+    "vite": "^7.0.0",
+    "zustand": "^5.0.0"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "@types/react": "^19.2.17",
+    "@types/react-dom": "^19.2.3"
+  }
 }
