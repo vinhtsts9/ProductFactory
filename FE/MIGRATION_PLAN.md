@@ -21,9 +21,9 @@ Giải nén source gốc
 - [x] Port Ontology overview: concept chain, type decomposition, vocabulary.
 - [ ] Port Attribute / Block.
 - [ ] Port Product flow.
-- [ ] Port Builder.
-- [ ] Port Config / Simulation.
-- [ ] Port Release / Catalog.
+- [x] Port Builder.
+- [x] Port Config / Simulation.
+- [x] Port Release / Catalog.
 
 ## Pha 0 - Source of truth
 

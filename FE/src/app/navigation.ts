@@ -28,6 +28,8 @@ export type AppView =
   | "pattern"
   | "template"
   | "config"
+  | "configForm"
+  | "builder"
   | "variant"
   | "catalog"
   | "obligation"
@@ -106,6 +108,8 @@ export const viewMeta: Record<AppView, { title: string; crumb: string }> = {
   pattern: { title: "Product Pattern", crumb: "Pipeline" },
   template: { title: "Product Template", crumb: "Pipeline" },
   config: { title: "Product Config", crumb: "Pipeline" },
+  configForm: { title: "Cấu hình Product Config", crumb: "Pipeline" },
+  builder: { title: "Trình dựng", crumb: "Pipeline" },
   variant: { title: "Product Variant", crumb: "Pipeline" },
   catalog: { title: "Product Catalog", crumb: "Pipeline" },
   obligation: { title: "Obligation Library", crumb: "Thư viện" },
